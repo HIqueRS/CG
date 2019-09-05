@@ -101,12 +101,13 @@ int main() {
 		"layout(location=0) in vec3 vp;"
 		"layout(location=1) in vec3 vc;"
 		"uniform mat4 matrix;"
+		"uniform mat4 proj;"
 		"out vec3 color;"
 		"void main () {"
 		"   color = vc;"
-		"	gl_Position =  matrix * vec4 (vp, 1.0);"
+		"	gl_Position = proj * matrix * vec4 (vp, 1.0);"
 		"}";
-	//
+	// proj *
 
 	/* the fragment shader colours each fragment (pixel-sized area of the
 	triangle) */
@@ -205,6 +206,7 @@ int main() {
 	glLinkProgram(shader_programme);
 
 	int matrixLocation = glGetUniformLocation(shader_programme, "matrix");
+	int matrixLocation_1 = glGetUniformLocation(shader_programme, "proj");
 	//glUseProgram (shader_programme);
 	//glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, matrix);
 
@@ -223,7 +225,7 @@ int main() {
 	std::cout<<"cos de 90: " << cos(b) << std::endl;
 	std::cout << "sin de 90: " << sin(b) << std::endl;
 
-	glm::mat4 ModelMatrix(1.f);
+	glm::mat4 ModelMatrix(1.f),Proj;
 	
 
 
@@ -269,11 +271,16 @@ int main() {
 		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotationX), glm::vec3(1.f, 0.f, 0.f));
 		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotationY), glm::vec3(0.f, 1.f, 0.f));
 		//ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.f), glm::vec3(0.f, 0.f, 1.f));
+		//ModelMatrix = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
+		//ModelMatrix = glm::scale(ModelMatrix, glm::vec3(2.0f, 2.0f, 2.0f));
+		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.f, 0.f, -0.001f));
+		
 		rotationX = 0;
 		rotationY = 0;
 
 		glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, glm::value_ptr(ModelMatrix));
-
+		Proj = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
+		glUniformMatrix4fv(matrixLocation_1, 1, GL_FALSE, glm::value_ptr(Proj));
 		/* wipe the drawing surface clear */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//		glUseProgram (shader_programme);
