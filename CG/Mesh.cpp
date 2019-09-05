@@ -4,7 +4,7 @@
 
 Mesh::Mesh()
 {
-	BoxEx();
+	//BoxEx();
 
 
 }
@@ -14,22 +14,30 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::SetVertices(int n ,GLfloat x, GLfloat y, GLfloat z)
+void Mesh::SetVertices(GLfloat x, GLfloat y, GLfloat z)
 {
-	Verts[n].x = x;
-	Verts[n].y = y;
-	Verts[n].z = z;
+	aux = new glm::vec3;
+	aux->x = x;
+	aux->y = y;
+	aux->z = z;
+	Verts.push_back(aux);
+	
 }
 
 void Mesh::BoxEx()
 {
-	SetVertices(0, 0.5f, 0.5f, 0.5f);
-	SetVertices(1, -0.5f, 0.5f, 0.5f);
-	SetVertices(2, -0.5f, 0.5f, -0.5f);
-	SetVertices(3, 0.5f, 0.5f, -0.5f);
+	SetVertices( 0.5f, 0.5f, 0.5f);
+	SetVertices( -0.5f, 0.5f, 0.5f);
+	SetVertices( -0.5f, 0.5f, -0.5f);
+	SetVertices( 0.5f, 0.5f, -0.5f);
 	
-	SetVertices(4, 0.5f, -0.5f, 0.5f);
-	SetVertices(5, -0.5f, -0.5f, 0.5f);
-	SetVertices(6, -0.5f, -0.5f, -0.5f);
-	SetVertices(7, 0.5f, -0.5f, -0.5f);
+	SetVertices( 0.5f, -0.5f, 0.5f);
+	SetVertices( -0.5f, -0.5f, 0.5f);
+	SetVertices( -0.5f, -0.5f, -0.5f);
+	SetVertices( 0.5f, -0.5f, -0.5f);
+}
+
+std::vector<glm::vec3*> Mesh::GetVerts()
+{
+	return Verts;
 }

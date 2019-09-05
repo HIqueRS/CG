@@ -7,6 +7,7 @@
 #include <glm/common.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <vector>
 
 #include "Mesh.h"
 
@@ -22,7 +23,7 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods
 	//std::cout << key << std::endl;
 
 	const GLfloat rotationSpeed = 10;
-
+	
 	
 	
 	
@@ -72,18 +73,29 @@ int main() {
 
 
 	GLfloat points[108];
-
-
+	std::vector<glm::vec3*> Verts;
 	
+
+	New_mesh.SetVertices(0.5f, 0.5f, 0.5f);
+	New_mesh.SetVertices(-0.5f, 0.5f, 0.5f);
+	New_mesh.SetVertices(-0.5f, 0.5f, -0.5f);
+	New_mesh.SetVertices(0.5f, 0.5f, -0.5f);
+	
+	New_mesh.SetVertices(0.5f, -0.5f, 0.5f);
+	New_mesh.SetVertices(-0.5f, -0.5f, 0.5f);
+	New_mesh.SetVertices(-0.5f, -0.5f, -0.5f);
+	New_mesh.SetVertices(0.5f, -0.5f, -0.5f);
+	
+	Verts = New_mesh.GetVerts();
 
 	int i = 0;
 	for (int f = 0; f < 12; f++)
 	{
 		for (int v = 0; v < 3; v++)
 		{
-			points[i++] = New_mesh.Verts[New_mesh.g.faces[f].Id_Vert[v]].x;
-			points[i++] = New_mesh.Verts[New_mesh.g.faces[f].Id_Vert[v]].y;
-			points[i++] = New_mesh.Verts[New_mesh.g.faces[f].Id_Vert[v]].z;
+			points[i++] = Verts[New_mesh.g.faces[f].Id_Vert[v]]->x;
+			points[i++] = Verts[New_mesh.g.faces[f].Id_Vert[v]]->y;
+			points[i++] = Verts[New_mesh.g.faces[f].Id_Vert[v]]->z;
 		}
 	}
 
