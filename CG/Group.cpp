@@ -73,3 +73,8 @@ void Group::BoxEx()
 
 	
 }
+
+void Group::SetName(std::string N)
+{
+	Name = N;
+}

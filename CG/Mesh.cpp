@@ -41,3 +41,9 @@ std::vector<glm::vec3*> Mesh::GetVerts()
 {
 	return Verts;
 }
+
+void Mesh::CreateGroup(std::string name)
+{
+	auxG = new Group;
+
+}
